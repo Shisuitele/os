@@ -1,0 +1,292 @@
+Practical No - 4 (sed editor)
+
+Create the file with the name “sed-test” with the following contents: -
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+Write and execute the commands for the following using sed:
+1. Display only first three lines.
+Code: [tybscit@localhost Desktop]$ sed '3q' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+
+2. Display line numbers from four to seven.
+Code: [tybscit@localhost Desktop]$ sed -n '4,7p' sed-test
+Output:
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+
+3. Display only last line.
+Code: [tybscit@localhost Desktop]$ sed -n '$p' sed-test
+Output: Celery:Veg:1.79:1:n
+
+4. Display only line number 8.
+Code: [tybscit@localhost Desktop]$ sed -n '8p' sed-test
+Output: Newspaper:Sundry:1.00:1:y
+
+5. Display lines containing “Onions”.
+Code: [tybscit@localhost Desktop]$ sed -n '/Onions/p' sed-test
+Output: Onions:Veg:0.89:6:n
+
+6. Display all lines containing “Diary”.
+Code: [tybscit@localhost Desktop]$ sed -n '/Diary/p' sed-test
+Output:
+Milk:Diary:1.89:2:n
+Cheese:Diary:4.39:1:n
+
+7. Delete second line.
+Code: [tybscit@localhost Desktop]$ sed '2d' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+8. Delete lines from seven to ten.
+Code: [tybscit@localhost Desktop]$ sed '7,10d' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+9. Delete lines containing “Meat”.
+Code: [tybscit@localhost Desktop]$ sed -n '/Meat/d' sed-test
+
+10. Display lines start at 3 through the first line matching the string “Meat”.
+Code: [tybscit@localhost Desktop]$ sed -n '3,/Meat/p' sed-test
+Output:
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+
+11. Delete lines start at 4 through the first line matching the string “Fruit”.
+Code: [tybscit@localhost Desktop]$ sed -n '4,/Fruit/d' sed-test
+
+12. Display lines number at interval of 2 i.e. starting at 1, every other line is output.
+Code: [tybscit@localhost Desktop]$ cat -n sed-test|sed -n '1~2p'
+Output:
+1 Carrots:veg:1.39:1:n
+3 Magazine:Sundry:3.50:1:y
+5 Sandwich:Deli:3.89:2:y
+7 Chicken:Meat:4.89:2:n
+9 Fish:Meat:3.79:3:n
+11 Floorwax:Hshld:4.65:1:y
+13
+15
+
+13. Display lines starting at 2 and outputs every third line from there.
+Code: [tybscit@localhost Desktop]$ cat -n sed-test|sed -n '2~3p'
+Output:
+2 Milk:Diary:1.89:2:n
+5 Sandwich:Deli:3.89:2:y
+8 Newspaper:Sundry:1.00:1:y
+11 Floorwax:Hshld:4.65:1:y
+14 Celery:Veg:1.79:1:n
+
+14. Display lines starting with “S”.
+Code: [tybscit@localhost Desktop]$ sed -n '/^S/p' sed-test
+Output: Sandwich:Deli:3.89:2:y
+
+15. Display lines ends with “n”.
+Code: [tybscit@localhost Desktop]$ sed -n '/n$/p' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Cheese:Diary:4.39:1:n
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Fish:Meat:3.79:3:n
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+16. Display lines that are not starting with “C”.
+Code: [tybscit@localhost Desktop]$ sed -n '/^C/!p' sed-test
+Output:
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+
+17. Display lines that are not ending with “y”.
+Code: [tybscit@localhost Desktop]$ sed -n '/[^y]$/p' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Cheese:Diary:4.39:1:n
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Fish:Meat:3.79:3:n
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+18. Display all lines that are not starting with “v” or “V” in second field.
+Code: [tybscit@localhost Desktop]$ cut -d ":" -f2 sed-test|sed -n '/^[vV]/!p'
+Output:
+Diary
+Sundry
+Diary
+Deli
+Meat
+Sundry
+Meat
+Hshld
+Fruit
+
+19. Display all lines that are not ending with “y” in second field.
+Code: [tybscit@localhost Desktop]$ cut -d ":" -f2 sed-test|sed -n '/y$/!p' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Cheese:Diary:4.39:1:n
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Fish:Meat:3.79:3:n
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+20. Delete lines containing nothing.
+Code: [tybscit@localhost Desktop]$ sed -n '/^$/d' sed-test
+
+21. Delete all lines containing “2” in third field.
+Code: [tybscit@localhost Desktop]$ cut -d f4 sed-test|sed '/2/d' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Onions:Veg:0.89:6:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+22. Delete all lines containing “y” in fourth field.
+Code: [tybscit@localhost Desktop]$ cut -d f5 sed-test|sed '/y/d' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Fish:Meat:3.79:3:n
+Melon:Fruit:1.98:3:n
+
+23. Display all lines that do not start with C.
+Code: [tybscit@localhost Desktop]$ sed -n '/^S/!p' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+24. Display all lines that are not empty.
+Code: [tybscit@localhost Desktop]$ sed -n '/^$/!p' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+25. Delete any other line that does not contain the string “Fish”.
+Code: [tybscit@localhost Desktop]$ sed -n '/Fish/!d' sed-test
+
+26. Display lines between the strings “Milk” and “Newspaper”.
+Code: [tybscit@localhost Desktop]$ sed -n '/Milk/,/Newspaper/p' sed-test
+Output:
+Milk:Diary:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+
+27. Display lines between the string “Sundry” and line number 11.
+Code: [tybscit@localhost Desktop]$ sed -n '/Sundry/,11p' sed-test
+Output:
+Magazine:Sundry:3.50:1:y
+Cheese:Diary:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+
+28. Replace only first occurrence of “Diary” with “DAIRY” in all lines.
+Code: [tybscit@localhost Desktop]$ sed 's/Diary/DIARY/' sed-test
+Output:
+Carrots:veg:1.39:1:n
+Milk:DIARY:1.89:2:n
+Magazine:Sundry:3.50:1:y
+Cheese:DIARY:4.39:1:n
+Sandwich:Deli:3.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:3.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:3:n
+Celery:Veg:1.79:1:n
+
+29. Replace only first occurrence of “Diary” with “DAIRY” in all lines.
+Code: [tybscit@localhost Desktop]$ sed 's/3/4/' sed-test
+Output:
+Carrots:veg:1.49:1:n
+Milk:Diary:1.89:2:n
+Magazine:Sundry:4.50:1:y
+Cheese:Diary:4.49:1:n
+Sandwich:Deli:4.89:2:y
+Onions:Veg:0.89:6:n
+Chicken:Meat:4.89:2:n
+Newspaper:Sundry:1.00:1:y
+Fish:Meat:4.79:3:n
+Floorwax:Hshld:4.65:1:y
+Melon:Fruit:1.98:4:n
+Celery:Veg:1.79:1:n
+
